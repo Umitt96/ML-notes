@@ -1,0 +1,39 @@
+"""
+@author: Ritalin
+problem: olivetti_faces kütüphanesinde classification
+"""
+from sklearn.datasets import fetch_olivetti_faces
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
+import numpy as np
+import matplotlib.pyplot as plt
+
+
+oli_faces = fetch_olivetti_faces()
+    
+X = oli_faces.data
+y = oli_faces.target
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# n_est değerleri kıyaslaması
+nest_values = np.arange(10,150,10)
+acc_values = []
+
+for value in nest_values:
+    rf_clf = RandomForestClassifier(n_estimators= value, random_state= 42)
+    rf_clf.fit(X_train, y_train)
+    y_pred = rf_clf.predict(X_test)
+    acc = accuracy_score(y_test, y_pred)  
+    print(f"{value}. değer hesaplandı | {len(nest_values)}/{int(value/10)}")
+    acc_values.append(acc)
+
+
+
+    
+plt.figure(dpi=150)
+plt.plot(nest_values,acc_values, "g*-")
+plt.title("Random forest doğruluk grafiği")
+plt.xlabel("n_est değeri")
+plt.ylabel("accuracy değeri")
+plt.grid(True)
