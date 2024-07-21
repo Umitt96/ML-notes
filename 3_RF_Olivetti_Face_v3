@@ -1,0 +1,49 @@
+import numpy as np
+import time
+import matplotlib.pyplot as plt
+from sklearn.datasets import fetch_olivetti_faces
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
+
+# n_est değerleri kıyaslaması
+nest_values = np.arange(10, 150, 5)
+acc_values = []
+time_values = []
+
+oli_faces = fetch_olivetti_faces()
+
+X = oli_faces.data
+y = oli_faces.target
+
+for i, value in enumerate(nest_values, start=1):
+    start_time = time.time()
+    
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    rf_clf = RandomForestClassifier(n_estimators=value, random_state=42)
+    rf_clf.fit(X_train, y_train)
+    y_pred = rf_clf.predict(X_test)
+    acc = accuracy_score(y_test, y_pred)
+    
+    end_time = time.time()
+    elapsed_time = end_time - start_time
+    
+    print(f"{i}. değer hesaplandı | {len(nest_values)}/{i} | Süre: {elapsed_time:.6f} saniye")
+    acc_values.append(acc)
+    time_values.append(elapsed_time)
+
+# Accuracy grafiği
+plt.figure(dpi=150)
+plt.plot(nest_values, acc_values, "g*-", label='Accuracy')
+plt.title("Random Forest Doğruluk ve Süre Grafiği")
+plt.xlabel("n_est değeri")
+plt.ylabel("Accuracy değeri")
+plt.grid(True)
+
+# Süre grafiği
+plt.twinx()  # İkinci bir y ekseni oluştur
+plt.plot(nest_values, time_values, "b.-", label='Time', alpha=0.7)
+plt.ylabel("Süre (saniye)")
+plt.legend(loc='upper left')
+
+plt.show()
