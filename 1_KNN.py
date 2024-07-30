@@ -58,7 +58,6 @@ for k in range(1,21):
     accuracy_values.append(accuracy)
     k_values.append(k)
     
-    
 plt.figure(dpi=150)
 plt.plot(k_values,accuracy_values, "r*-")
 plt.title("K'ya göre doğruluk")
@@ -95,9 +94,6 @@ for i, weight in enumerate(["uniform","distance"]):
     plt.title("KNN regression weight = {}".format(weight))
 
 plt.tight_layout()
-
-
-
 
 
 
