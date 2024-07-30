@@ -1,7 +1,7 @@
 """
 @author: Ritalin
 
-problem: olivetti_faces kütüphanesinde classification
+problem: use olivetti_faces library with classification
 """
 from sklearn.datasets import fetch_olivetti_faces
 from sklearn.model_selection import train_test_split
