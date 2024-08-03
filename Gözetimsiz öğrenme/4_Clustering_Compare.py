@@ -11,7 +11,6 @@ import warnings
 
 warnings.filterwarnings("ignore")
 
-
 n_samples = 1000
 n_cls = 2
 
